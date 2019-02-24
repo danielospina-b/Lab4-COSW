@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "task-planner-cosw",
+    "default": "task-planner-cosw"
+  }
+}

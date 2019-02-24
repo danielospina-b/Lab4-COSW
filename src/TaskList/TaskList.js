@@ -1,12 +1,13 @@
 import React from "react";
-import SwipeableTemporaryDrawer from "../AppDrawer/AppDrawer";
+import DrawerAppBar from "../DrawerAppBar/DrawerAppBar";
 import CardList from "../CardList/CardList";
+import "./TaskList.css";
 
 export class TaskList extends React.Component {
     render() {
         return(
             <div>
-                <SwipeableTemporaryDrawer/>
+                <DrawerAppBar/>
                 <CardList/>
             </div>
         );

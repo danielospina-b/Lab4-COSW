@@ -18,3 +18,8 @@
     marginBottom: 12;
 }
 
+.status {
+    transform: scale(1.5);
+    margin: 20px;
+}
+

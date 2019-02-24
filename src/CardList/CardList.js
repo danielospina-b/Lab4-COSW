@@ -10,6 +10,7 @@ class CardList extends React.Component {
         });
         return (
             <div>
+				<br></br>
                 {cardList}
             </div>
         );
@@ -26,7 +27,7 @@ const listTasks = [
   		"email": "sancarbar@gmail"
   	},
   	"status": "Ready",
-  	"dueDate": 156464645611
+  	"dueDate": 1554686456114
 },
 {
     "description": "Some other description text ",
@@ -35,7 +36,7 @@ const listTasks = [
   		"email": "dospina@gmail"
   	},
   	"status": "In Progress",
-  	"dueDate": 156469645622
+  	"dueDate": 1564626456224
 },
 {
     "description": "Oh look, another description ",
@@ -44,6 +45,6 @@ const listTasks = [
   		"email": "jrosales@gmail"
   	},
   	"status": "Completed",
-  	"dueDate": 156469875633
+  	"dueDate": 1556509875633
 }
 ]

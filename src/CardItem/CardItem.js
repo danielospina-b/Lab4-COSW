@@ -6,18 +6,26 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import "./CardItem.css";
 import { CardHeader } from "@material-ui/core";
+import moment from "moment";
+import PlayCircleFilledWhiteOutlined from "@material-ui/icons/PlayCircleFilledWhiteOutlined";
+import DonutLarge from "@material-ui/icons/DonutLarge";
+import Done from "@material-ui/icons/Done";
 
 class CardItem extends React.Component {
     render() {
+        var statusIcon;
+        if (this.props.cardInfo.status === "Ready") {
+            statusIcon = (<PlayCircleFilledWhiteOutlined className="status" color="primary" />);
+        } else if(this.props.cardInfo.status === "In Progress") {
+            statusIcon = (<DonutLarge className="status" color="primary" />);
+        } else {
+            statusIcon = (<Done className="status" color="primary" />);
+        }
         return (
             <div>
                 <Card className="card">
                     <CardHeader
-                        action={
-                            <Typography>
-                                Status: {this.props.cardInfo.status}
-                            </Typography>
-                        }
+                        action={statusIcon}
                         title={
                             <Typography variant="h5">
                                 {this.props.cardInfo.description}
@@ -25,7 +33,7 @@ class CardItem extends React.Component {
                         }
                         subheader={
                             <Typography color="textSecondary">
-                                {this.props.cardInfo.dueDate}
+                                {moment(this.props.cardInfo.dueDate).format("DD-MM-YYYY HH:MM")}
                             </Typography>
                         }
                     />
@@ -38,7 +46,7 @@ class CardItem extends React.Component {
                     </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Learn More</Button>
+                        <Button size="small">See More</Button>
                     </CardActions>
                 </Card>
                 <br></br>

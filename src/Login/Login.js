@@ -18,7 +18,7 @@ export class Login extends React.Component {
                 <main className="layout">
                     <Paper className="paper">
                         <LanguageRounded color="primary" className="svg_icons"/>
-                        <Typography variant="display1">Sign in</Typography>
+                        <Typography variant="h4">Sign in</Typography>
                         <form className="form" onSubmit={this.handleSubmit} name="login-form">
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
