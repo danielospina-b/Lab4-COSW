@@ -1,5 +1,8 @@
 import React from "react";
 import CardItem from "../CardItem/CardItem";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from "@material-ui/icons/Add";
+import { Link } from "react-router-dom";
 
 class CardList extends React.Component {
     render() {
@@ -11,10 +14,21 @@ class CardList extends React.Component {
         return (
             <div>
 				<br></br>
-                {cardList}
+				{cardList}
+				<Link to="/tasklist/newtask">
+                    <Fab color="primary" style={fab}>
+                        <AddIcon></AddIcon>
+                    </Fab>
+                </Link>
             </div>
         );
     }
+}
+
+const fab = {
+    bottom: 15,
+    right: 15,
+    position: "fixed"
 }
 
 export default CardList;
