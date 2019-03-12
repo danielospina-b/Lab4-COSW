@@ -5,16 +5,35 @@ import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
 
 class CardList extends React.Component {
+
+    state = {
+        tasksList: JSON.parse(localStorage.getItem("tasks"))
+    }
+
     render() {
-        const cardList = listTasks.map((cardItem, i) => {
+        const cardListPre = listTasks.map((cardItem, i) => {
             return (
                 <CardItem key={i} cardInfo={cardItem} />
             );
         });
+
+        var cardList = (<div></div>);
+        console.log(this.state.tasksList);
+        if (this.state.tasksList !== null) {
+            cardList = this.state.tasksList.map((cardItem, i) => {
+                return (
+                    <CardItem key={i} cardInfo={cardItem} />
+                );
+            });
+        }
+
+        console.log("TEST");
+
         return (
             <div>
 				<br></br>
-				{cardList}
+                {cardList}
+				{cardListPre}
 				<Link to="/tasklist/newtask">
                     <Fab color="primary" style={fab}>
                         <AddIcon></AddIcon>

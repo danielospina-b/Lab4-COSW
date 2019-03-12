@@ -4,6 +4,7 @@ import { Login } from './Login/Login';
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { TaskList } from "./TaskList/TaskList";
+import { UserRegister } from "./UserRegister/UserRegister";
 
 const theme = createMuiTheme({
     palette: {
@@ -34,6 +35,10 @@ const TaskListView = () => (
     <TaskList/>
 );
 
+const RegisterView = () => (
+    <UserRegister/>
+);
+
 
 class App extends Component {
     render() {
@@ -44,6 +49,7 @@ class App extends Component {
                         <div>
                             <Route exact path="/" component={LoginView}/>
                             <Route path="/tasklist" component={TaskListView}/>
+                            <Route path="/register" component={RegisterView}/>
                         </div>
                     </Router>
                 </MuiThemeProvider>

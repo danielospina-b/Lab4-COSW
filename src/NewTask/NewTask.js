@@ -40,6 +40,22 @@ export class NewTask extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+        console.log(this.state.taskDate);
+        console.log(localStorage.getItem("tasks"));
+        var tasksStored = JSON.parse(localStorage.getItem("tasks"));
+        if (tasksStored === null) tasksStored = [];
+        var taskToSave = {
+            "description": this.state.description,
+            "responsible": {
+                "name": this.state.name,
+                "email": this.state.email,  
+            },
+            "status": this.state.priority,
+            "dueDate": this.state.taskDate
+        }
+        tasksStored.unshift(taskToSave);
+        console.log(tasksStored);
+        localStorage.setItem("tasks", JSON.stringify(tasksStored));
         this.setState({triggerRedirect: true});
     };
 
@@ -79,7 +95,7 @@ export class NewTask extends React.Component {
                                 />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel>Priority</InputLabel>
+                                <InputLabel>Status</InputLabel>
                                 <Select 
                                     value={this.state.priority}
                                     onChange={this.handleChange}
@@ -91,9 +107,9 @@ export class NewTask extends React.Component {
                                     <MenuItem value="">
                                         <em>None</em>
                                     </MenuItem>
-                                    <MenuItem value="Normal" >Normal</MenuItem>
-                                    <MenuItem value="En Progreso" >En Progreso</MenuItem>
-                                    <MenuItem value="Completado" >Completado</MenuItem>
+                                    <MenuItem value="Ready" >Pendiente</MenuItem>
+                                    <MenuItem value="In Progress" >En Progreso</MenuItem>
+                                    <MenuItem value="Completed" >Completado</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
