@@ -7,11 +7,28 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LanguageRounded from "@material-ui/icons/BookOutlined";
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { Redirect } from "react-router-dom";
+import axios from "axios";
 import "./Login.css";
 
 
 export class Login extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.state = {
+            fireRedirect : false
+        }
+    }
+
     render() {
+        if (this.state.fireRedirect === true) {
+            return <Redirect to="/tasklist"/>
+        }
+        console.log("[FUNCIONALIDAD TEMPORAL] Para ver la lista de tareas si no hay conexion con el API Rest, cambiar el token en localStorage a una cadena aleatoria, e ir a http://localhost:3000/tasklist o su equivalente.");
+
         return (
             <React.Fragment>
                 <CssBaseline />
@@ -49,5 +66,24 @@ export class Login extends React.Component {
                 </main>
             </React.Fragment>
         );
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        axios.post("http://localhost:8080/user/login", {
+            username: email,
+            password: password
+        }).then((response) => {
+            console.log(response.data);
+            localStorage.setItem("token", response.data.accessToken);
+            this.setState({
+                fireRedirect: true
+            });
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 }

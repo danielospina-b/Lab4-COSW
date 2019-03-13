@@ -27,8 +27,6 @@ class CardList extends React.Component {
             });
         }
 
-        console.log("TEST");
-
         return (
             <div>
 				<br></br>

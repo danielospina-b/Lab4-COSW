@@ -11,6 +11,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuOutlined from "@material-ui/icons/MenuOutlined"
 import AccountBox from "@material-ui/icons/AccountBox";
 import { AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
+import { Redirect } from "react-router-dom";
 import "./DrawerAppBar.css";
 
 class DrawerAppBar extends React.Component {
@@ -20,6 +21,7 @@ class DrawerAppBar extends React.Component {
         left: false,
         bottom: false,
         right: false,
+        logout: false
     };
     
     toggleDrawer = (side, open) => () => {
@@ -28,7 +30,18 @@ class DrawerAppBar extends React.Component {
         });
     };
 
+    handleLogout = () => {
+        console.log("Logged Out");
+        localStorage.setItem("token", "undefined");
+        this.setState({
+            logout : true
+        })
+    };
+
     render() {
+        if (this.state.logout === true) {
+            return <Redirect to="/"/>
+        }
         return (
             <div>
                 <AppBar title="My App" position="relative">
@@ -39,7 +52,7 @@ class DrawerAppBar extends React.Component {
                         <Typography variant="h6" color="inherit" className="grow" >
                             Task List
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        <Button color="inherit" onClick={this.handleLogout} >LogOut</Button>
                     </Toolbar>
                 </AppBar>
                 <SwipeableDrawer
