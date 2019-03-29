@@ -33,6 +33,9 @@ class DrawerAppBar extends React.Component {
     handleLogout = () => {
         console.log("Logged Out");
         localStorage.setItem("token", "undefined");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userMail");
+        localStorage.removeItem("tasks");
         this.setState({
             logout : true
         })
@@ -81,7 +84,7 @@ const sideList = (
                 <ListItemIcon>
                     <AccountBox className="accountIcon" />
                 </ListItemIcon>
-                <ListItemText primary="Santiago Carrillo" secondary="santiago.carrillo@mail.com" />
+                <ListItemText primary={localStorage.getItem("userName")} secondary={localStorage.getItem("userMail")} />
             </ListItem>
             <Divider/>
             <ListItem button key="inbox">

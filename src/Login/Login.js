@@ -27,7 +27,6 @@ export class Login extends React.Component {
         if (this.state.fireRedirect === true) {
             return <Redirect to="/tasklist"/>
         }
-        console.log("[FUNCIONALIDAD TEMPORAL] Para ver la lista de tareas si no hay conexion con el API Rest, cambiar el token en localStorage a una cadena aleatoria, e ir a http://localhost:3000/tasklist o su equivalente.");
 
         return (
             <React.Fragment>
@@ -70,20 +69,46 @@ export class Login extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        var email = document.getElementById("email").value;
+        var useremail = document.getElementById("email").value;
         var password = document.getElementById("password").value;
 
-        axios.post("http://localhost:8080/user/login", {
-            username: email,
+        axios.post(apiURL + "/user/login", {
+            email: useremail,
             password: password
         }).then((response) => {
             console.log(response.data);
             localStorage.setItem("token", response.data.accessToken);
+            this.createAxiosInstance(response.data.accessToken);
+            this.getBasicUserInfoAndRedirect(useremail);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    createAxiosInstance(token) {
+        axiosInstance = axios.create({
+            baseURL: apiURL,
+            timeout: 1000,
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+    }
+
+    getBasicUserInfoAndRedirect(mail) {
+        axiosInstance.get("/user/info", {
+            params: {
+                email : mail
+            }
+        }).then((response) => {
+            localStorage.setItem("userName", response.data.firstname + " " + response.data.lastname);
+            localStorage.setItem("userMail", response.data.email);
             this.setState({
                 fireRedirect: true
             });
         }).catch((error) => {
             console.log(error);
-        })
+        });
     }
 }
+
+const apiURL = "https://task-planner-ospina.herokuapp.com";
+var axiosInstance;

@@ -9,6 +9,7 @@ export class TaskList extends React.Component {
     render() {
 
         if (localStorage.getItem("token") === "undefined" | localStorage.getItem("token") === null) {
+            console.log("undefined token");
             return <Redirect to="/"/>
         }
         
@@ -17,7 +18,7 @@ export class TaskList extends React.Component {
                 <DrawerAppBar/>
                 <Switch>
                     <Route exact path="/tasklist" component={CardListView}/>
-                    <Route path={'/tasklist/newtask'} component={NewTaskView}></Route>
+                    <Route path="/tasklist/newtask" component={NewTaskView}/>
                 </Switch>
             </div>
         );

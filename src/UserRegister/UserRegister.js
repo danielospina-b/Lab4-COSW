@@ -7,10 +7,26 @@ import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import BookOutlined from "@material-ui/icons/BookOutlined";
-
+import { Redirect } from "react-router-dom";
+import axios from "axios";
 
 export class UserRegister extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.state = {
+            fireRedirect : false
+        }
+    }
+
     render() {
+
+        if (this.state.fireRedirect === true) {
+            return <Redirect to="/tasklist"/>
+        }
+
         return (
             <React.Fragment>
                 <CssBaseline />
@@ -22,6 +38,10 @@ export class UserRegister extends React.Component {
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Your Name</InputLabel>
                                 <Input id="name" name="name" autoFocus />
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="email">Your Last Name</InputLabel>
+                                <Input id="lastname" name="lastname" />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Your Email Address</InputLabel>
@@ -52,7 +72,7 @@ export class UserRegister extends React.Component {
                                 color="primary"
                                 className="submit"
                             >
-                                Comlete Registration
+                                Complete Registration
                             </Button>
                         </form>
                         <br></br>
@@ -61,4 +81,35 @@ export class UserRegister extends React.Component {
             </React.Fragment>
         );
     }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        var name = document.getElementById("name").value;
+        var lastname = document.getElementById("lastname").value;
+        var email = document.getElementById("email").value;
+        var password1 = document.getElementById("password").value;
+        var password2 = document.getElementById("passwordconfirm").value;
+        if (password1 === password2) {
+            axios.post(apiURL + "/user/register", {
+                "email" : email,
+                password : password1,
+                firstname : name,
+                "lastname": lastname
+            }).then((response) => {
+                localStorage.setItem("token", response.data.accessToken);
+                localStorage.setItem("userName", name + " " + lastname);
+                localStorage.setItem("userMail", email);
+                this.setState({
+                    fireRedirect: true
+                });
+            }).catch((error) => {
+                console.log(error);
+            });
+        } else {
+            alert("Password do not match.")
+        }
+    }
+
 }
+
+const apiURL = "https://task-planner-ospina.herokuapp.com";
